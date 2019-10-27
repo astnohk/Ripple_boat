@@ -1,8 +1,9 @@
+#include <cmath>
 #include <cstdio>
 #include <cstdlib>
-#include <cmath>
-#include <string>
+#include <cstring>
 #include <ctime>
+#include <string>
 #include <sys/time.h>
 #include <X11/Xlib.h>
 #include <X11/keysym.h>
