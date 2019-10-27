@@ -474,7 +474,9 @@ Another_Pointer_Adjust:
 		if (Switch.Quake) {
 			if (Quake_Time-->0) quaker();
 			else Switch.Quake = 0;
-		} else if(Quake_Time<Def_Quake_Time) Quake_Time = Def_Quake_Time;
+		} else if(Quake_Time<Def_Quake_Time) {
+			Quake_Time = Def_Quake_Time;
+		}
 
 		moveboat();
 
@@ -893,12 +895,20 @@ void drawboat(){
 }
 
 void quaker(){
-	int i, k, extent_diastrophism;
-	extent_diastrophism = 100.0+rand()/(1.0+RAND_MAX)*100.0;
-	while (extent_diastrophism--) {
-		i = 1.0+rand()/(1.0+RAND_MAX)*TerrainSize;
-		k = 1.0+rand()/(1.0+RAND_MAX)*TerrainSize;
-		Terrain[i][k] += rand()>Rand_Half?0.1:-0.1;
+	int i, k;
+	int x, y;
+	int extent_diastrophism = 20.0 + rand() / (1.0 + RAND_MAX)*180.0;
+	double coeff = 10.0;
+	x = 1.0 + rand() / (1.0 + RAND_MAX)*TerrainSize;
+	y = 1.0 + rand() / (1.0 + RAND_MAX)*TerrainSize;
+	while (extent_diastrophism-- > 0) {
+		for (i = 0; i < TerrainSize; i++) {
+			for (k = 0; k < TerrainSize; k++) {
+				double dist = (POW2((double)(i - x) / TerrainSize * coeff) + POW2((double)(k - y) / TerrainSize * coeff));
+				Terrain[i][k] += std::exp(-dist) * rand() / RAND_MAX * 0.0125;
+				Terrain[i][k] -= (rand() > RAND_MAX / 2) ? 0.0 : 0.00025;
+			}
+		}
 	}
 }
 

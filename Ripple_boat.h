@@ -16,6 +16,8 @@
 #define TERRAINDATSIZE 52
 #define SPLASH_MAX 128
 
+#define POW2(a) ((a)*(a))
+
 
 
 
